@@ -1,0 +1,69 @@
+.copy-paste {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.copy-paste__btn {
+  padding: 0.3rem 1rem;
+  border: 1px solid rgb(143, 143, 143);
+  color: #646363;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.copy-paste__btn:hover {
+  color: #161616;
+  border: 1px solid #161616;
+}
+
+.modal--paste {
+  height: auto;
+}
+
+.modal--paste .modal__container {
+  gap: 1rem;
+  align-items: center;
+}
+
+.modal__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  max-width: 30rem;
+}
+
+.modal__text h4,
+.modal__text span {
+  color: rgb(202, 16, 16);
+  font-weight: bold;
+}
+
+.modal--paste textarea {
+  resize: none;
+  width: 100%;
+  height: 20rem;
+  border: 1px solid black;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.5rem;
+}
+
+.modal__button {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal__button button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal__button button:hover {
+  color: #fff;
+  background-color: var(--pri-clr);
+}

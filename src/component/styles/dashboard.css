@@ -1,0 +1,16 @@
+.dashboard {
+  display: flex;
+  gap: 2em;
+  height: 80vh;
+  max-height: 50rem;
+  min-height: 34rem;
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+    max-height: unset;
+    height: unset;
+    gap: 1em;
+  }
+}
