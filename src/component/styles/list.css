@@ -106,4 +106,7 @@
   .card {
     padding: 1em;
   }
+  .card__array {
+    list-style: none;
+  }
 }
