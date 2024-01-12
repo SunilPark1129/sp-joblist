@@ -166,6 +166,11 @@
   background-color: #a9b9e7;
 }
 
+.modal__button__delete {
+  background-color: rgb(223, 29, 29) !important;
+  color: #fff;
+}
+
 @media (max-width: 500px) {
   .add {
     display: flex;

@@ -58,6 +58,12 @@ const Dashboard = ({ updatedForm, filterData }) => {
   useEffect(() => {
     if (localStorage.getItem("job-list")) {
       setData(JSON.parse(localStorage.getItem("job-list")));
+    } else {
+      // when data is empty or deleted all cache
+      localStorage.setItem("job-list", JSON.stringify({ result: [] }));
+      setData(null);
+      setFilteredData(null);
+      setSelectedCompany(null);
     }
   }, [updatedForm]);
 
