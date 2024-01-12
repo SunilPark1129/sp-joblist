@@ -65,7 +65,9 @@ const ListItems = ({ data, getStatus, removeForm }) => {
               </p>
             </div>
             <div className="modal__button">
-              <button onClick={removeHandler}>YES</button>
+              <button className="modal__button__delete" onClick={removeHandler}>
+                YES
+              </button>
               <button onClick={() => setHasOpened(false)}>NO</button>
             </div>
           </div>
