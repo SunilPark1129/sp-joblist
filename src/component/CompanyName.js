@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./styles/companyName.css";
+import { calculateDate } from "../utilities/calculateDate";
 const CompanyName = ({ data, getCompany, selectedCompany }) => {
   if (!data || !selectedCompany)
     return (
@@ -19,24 +20,28 @@ const CompanyName = ({ data, getCompany, selectedCompany }) => {
   for (let { status } of data) {
     counting[status] = counting[status] + 1;
   }
+
   return (
     <aside className="company-lists">
       <div className="company-lists__box">
-        {data.map((item) => (
-          <div
-            className={`company company--${item.status} ${
-              selectedCompany.id === item.id && "company--active"
-            }`}
-            key={item.id}
-            onClick={() => getCompany(item)}
-          >
-            <div className="company__text">
-              <p>{item.company}</p>
-              <p>{item.date}</p>
+        {data.map((item) => {
+          const dateStr = calculateDate(item.id);
+          return (
+            <div
+              className={`company company--${item.status} ${
+                selectedCompany.id === item.id && "company--active"
+              }`}
+              key={item.id}
+              onClick={() => getCompany(item)}
+            >
+              <div className="company__text">
+                <p>{item.company}</p>
+                <p>{dateStr}</p>
+              </div>
+              <div className="company__bg"></div>
             </div>
-            <div className="company__bg"></div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="company-total">
         <p className="company--pending">

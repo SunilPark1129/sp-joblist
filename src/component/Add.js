@@ -13,7 +13,6 @@ const strInitVal = {
   company: "",
   title: "",
   salaries: "",
-  date: "",
   link: "",
 };
 
@@ -79,7 +78,6 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
       desired: arr.desired,
       benefit: arr.benefit,
       salaries: str.salaries,
-      date: str.date,
       link: str.link,
       status: "pending",
     };
@@ -188,15 +186,6 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
                 <input
                   type="text"
                   id="salaries"
-                  onChange={stringChangeHandler}
-                  autoComplete="off"
-                />
-              </label>
-              <label>
-                Date:{" "}
-                <input
-                  type="text"
-                  id="date"
                   onChange={stringChangeHandler}
                   autoComplete="off"
                 />

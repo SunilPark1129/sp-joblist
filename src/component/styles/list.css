@@ -25,6 +25,15 @@
   font-size: 1em;
 }
 
+.card__time {
+  padding: 0.5em 1em;
+  background-color: rgb(235, 106, 106);
+  display: inline-block;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.8em;
+}
+
 .card--no-data {
   min-height: 20rem;
   height: 100%;

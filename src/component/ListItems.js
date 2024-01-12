@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./styles/list.css";
+import { calculateDate } from "../utilities/calculateDate";
 
 /**
   {
@@ -11,7 +12,6 @@ import "./styles/list.css";
     desired: [],
     salaries: "",
     benefit: [],
-    date: "",
     link: "",
     status: "pending",
   },
@@ -42,7 +42,6 @@ const ListItems = ({ data, getStatus, removeForm }) => {
     desired,
     salaries,
     benefit,
-    date,
     link,
     status,
   } = data;
@@ -79,6 +78,8 @@ const ListItems = ({ data, getStatus, removeForm }) => {
   function submitHandler() {
     setHasOpened(true);
   }
+
+  const strDate = calculateDate(id);
 
   return (
     <div className="list" ref={ref}>
@@ -125,6 +126,9 @@ const ListItems = ({ data, getStatus, removeForm }) => {
           >
             Rejected
           </button>
+        </div>
+        <div>
+          <p className="card__time">{strDate}</p>
         </div>
         <div>
           <p>
@@ -180,11 +184,6 @@ const ListItems = ({ data, getStatus, removeForm }) => {
               <li key={idx}>{str}</li>
             ))}
           </ul>
-        </div>
-        <div>
-          <p>
-            <span>Date:</span> {date}
-          </p>
         </div>
         <div>
           <p className="card__link">
