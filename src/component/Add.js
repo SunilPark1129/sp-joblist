@@ -35,11 +35,11 @@ function AddBox({ arr, setArr, propertyKey }) {
 
   return (
     <div>
-      <label htmlFor="description">
+      <label htmlFor={propertyKey}>
         {propertyKey.charAt(0).toUpperCase() + propertyKey.slice(1)}:
       </label>
       <div className="modal__group">
-        <input type="text" id="description" autoComplete="off" ref={ref} />
+        <input type="text" id={propertyKey} autoComplete="off" ref={ref} />
         <button type="button" onClick={() => addHandler(ref.current.value)}>
           +
         </button>
