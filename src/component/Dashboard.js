@@ -47,7 +47,7 @@ const Dashboard = ({ updatedForm, filterData }) => {
           }
         });
         setFilteredData(temp);
-        setSelectedCompany(temp[0]);
+        setSelectedCompany(temp[temp.length - 1]);
       } catch (err) {
         localStorage.removeItem("job-list");
         console.log(err);
