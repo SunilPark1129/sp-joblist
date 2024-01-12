@@ -94,9 +94,9 @@ const ListItems = ({ data, getStatus, removeForm }) => {
           <h3>
             <span>Company:</span> {company}
           </h3>
-          <h3>
-            <span>Title:</span> {title}
-          </h3>
+        </div>
+        <div>
+          <p className="card__time">{strDate}</p>
         </div>
         <div className="card__button">
           <p>
@@ -127,74 +127,88 @@ const ListItems = ({ data, getStatus, removeForm }) => {
             Rejected
           </button>
         </div>
-        <div>
-          <p className="card__time">{strDate}</p>
-        </div>
-        <div>
+        {title.trim().length !== 0 && (
           <p>
-            <span>Description:</span>{" "}
+            <span>Title:</span> {title}
           </p>
-          <ul className="card__array card__array--description">
-            {description.map((str, idx) => (
-              <li key={idx}>{str}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p>
-            <span>Responsibilities:</span>{" "}
-          </p>
-          <ul className="card__array">
-            {responsibilities.map((str, idx) => (
-              <li key={idx}>{str}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p>
-            <span>Requirements:</span>{" "}
-          </p>
-          <ul className="card__array">
-            {requirements.map((str, idx) => (
-              <li key={idx}>{str}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p>
-            <span>Desired:</span>{" "}
-          </p>
-          <ul className="card__array">
-            {desired.map((str, idx) => (
-              <li key={idx}>{str}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p>
-            <span>Salaries:</span> {salaries}
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>Benefits:</span>{" "}
-          </p>
-          <ul className="card__array card__array--benefit">
-            {benefit.map((str, idx) => (
-              <li key={idx}>{str}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="card__link">
-            <span>Link:</span>{" "}
-            {link && (
+        )}
+        {description.length !== 0 && (
+          <div>
+            <p>
+              <span>Description:</span>{" "}
+            </p>
+            <ul className="card__array card__array--description">
+              {description.map((str, idx) => (
+                <li key={idx}>{str}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {responsibilities.length !== 0 && (
+          <div>
+            <p>
+              <span>Responsibilities:</span>{" "}
+            </p>
+            <ul className="card__array">
+              {responsibilities.map((str, idx) => (
+                <li key={idx}>{str}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {requirements.length !== 0 && (
+          <div>
+            <p>
+              <span>Requirements:</span>{" "}
+            </p>
+            <ul className="card__array">
+              {requirements.map((str, idx) => (
+                <li key={idx}>{str}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {desired.length !== 0 && (
+          <div>
+            <p>
+              <span>Desired:</span>{" "}
+            </p>
+            <ul className="card__array">
+              {desired.map((str, idx) => (
+                <li key={idx}>{str}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {salaries.trim().length !== 0 && (
+          <div>
+            <p>
+              <span>Salaries:</span> {salaries}
+            </p>
+          </div>
+        )}
+        {benefit.length !== 0 && (
+          <div>
+            <p>
+              <span>Benefits:</span>{" "}
+            </p>
+            <ul className="card__array card__array--benefit">
+              {benefit.map((str, idx) => (
+                <li key={idx}>{str}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {link.trim().length !== 0 && (
+          <div>
+            <p className="card__link">
+              <span>Link:</span>{" "}
               <a href={link} target="_blank">
                 Go to the page
               </a>
-            )}
-          </p>
-        </div>
+            </p>
+          </div>
+        )}
         <div>
           <p className={`status status--${status}`}>{status}</p>
         </div>

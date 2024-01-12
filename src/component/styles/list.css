@@ -25,7 +25,8 @@
   font-size: 1em;
 }
 
-.card__time {
+.card__time,
+.status {
   padding: 0.5em 1em;
   background-color: rgb(235, 106, 106);
   display: inline-block;
@@ -68,11 +69,7 @@
 
 .status {
   text-transform: uppercase;
-  padding: 0.5em 1em;
   background-color: var(--fnt-pending);
-  display: inline-block;
-  border-radius: 4px;
-  color: #fff;
 }
 
 .card__button {
