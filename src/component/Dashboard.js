@@ -28,7 +28,6 @@ const Dashboard = ({ updatedForm, filterData }) => {
     const temp = data.result.filter((item) => item.id !== id);
     localStorage.setItem("job-list", JSON.stringify({ result: temp }));
     setData({ result: temp });
-    setSelectedCompany(temp[0]);
   }
 
   useEffect(() => {
