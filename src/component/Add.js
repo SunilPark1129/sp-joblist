@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./styles/add.css";
 
-const initValue = {
+const arrInitVal = {
   description: [],
   responsibilities: [],
   requirements: [],
@@ -9,34 +9,78 @@ const initValue = {
   benefit: [],
 };
 
-const Add = ({ renderForm }) => {
-  const [hasOpened, setOpened] = useState(false);
-  const descriptionRef = useRef(null);
-  const responsibilitiesRef = useRef(null);
-  const requirementsRef = useRef(null);
-  const desiredRef = useRef(null);
-  const benefitRef = useRef(null);
+const strInitVal = {
+  company: "",
+  title: "",
+  salaries: "",
+  date: "",
+  link: "",
+};
 
-  const [arr, setArr] = useState(initValue);
+function AddBox({ arr, setArr, propertyKey }) {
+  const ref = useRef(null);
+
+  // push string into array
+  function addHandler(val) {
+    if (val.trim().length === 0) return;
+    setArr((prev) => ({ ...prev, [propertyKey]: [...prev[propertyKey], val] }));
+    ref.current.value = "";
+  }
+
+  function removeHandler(idx) {
+    setArr((prev) => ({
+      ...prev,
+      [propertyKey]: prev[propertyKey].filter((_, i) => i !== idx),
+    }));
+  }
+
+  return (
+    <div>
+      <label htmlFor="description">
+        {propertyKey.charAt(0).toUpperCase() + propertyKey.slice(1)}:
+      </label>
+      <div className="modal__group">
+        <input type="text" id="description" autoComplete="off" ref={ref} />
+        <button type="button" onClick={() => addHandler(ref.current.value)}>
+          +
+        </button>
+      </div>
+      {arr[propertyKey].length !== 0 && (
+        <div className="modal__list-preview">
+          {arr[propertyKey].map((item, idx) => (
+            <div className="modal__list-preview__item" key={idx}>
+              <p>{item}</p>
+              <button type="button" onClick={() => removeHandler(idx)}>
+                X
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AddModal({ setOpened, hasOpened, renderForm }) {
+  const [arr, setArr] = useState(arrInitVal);
+  const [str, setStr] = useState(strInitVal);
 
   function submitHandler(e) {
     e.preventDefault();
-    const { company, title, salaries, date, link } = e.target;
-
-    if (company.value.length === 0) return;
+    if (str.company.length === 0) return;
 
     const payload = {
       id: Date.now(),
-      company: company.value,
-      title: title.value,
+      company: str.company,
+      title: str.title,
       description: arr.description,
       responsibilities: arr.responsibilities,
       requirements: arr.requirements,
       desired: arr.desired,
       benefit: arr.benefit,
-      salaries: salaries.value,
-      date: date.value,
-      link: link.value,
+      salaries: str.salaries,
+      date: str.date,
+      link: str.link,
       status: "pending",
     };
 
@@ -47,260 +91,139 @@ const Add = ({ renderForm }) => {
     setOpened(false);
   }
 
-  function addHandler(category, val) {
-    if (val.trim().length === 0) return;
-    setArr((prev) => ({ ...prev, [category]: [...prev[category], val] }));
+  // update string values
+  function stringChangeHandler(e) {
+    const { id, value } = e.target;
+
+    setStr((prev) => ({ ...prev, [id]: value }));
   }
 
-  function removeHandler(category, idx) {
-    setArr((prev) => ({
-      ...prev,
-      [category]: prev[category].filter((_, i) => i !== idx),
-    }));
-  }
-
+  // cleanup phase
   useEffect(() => {
     return () => {
-      setArr(initValue);
+      setArr(arrInitVal);
+      setStr(strInitVal);
     };
   }, [hasOpened]);
 
-  function AddModal() {
-    if (hasOpened)
-      return (
-        <>
-          <section className={`modal`}>
-            <div className="modal__container">
-              <button
-                className="plus-svg plus-svg--exit mg-left"
-                onClick={() => setOpened(false)}
-                title="closing the form"
+  if (hasOpened)
+    return (
+      <>
+        <section className={`modal`}>
+          <div className="modal__container">
+            <button
+              className="plus-svg plus-svg--exit mg-left"
+              onClick={() => setOpened(false)}
+              title="closing the form"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  width="18"
+                <rect x="6" width="6" height="18" rx="1" fill="#1E1E1E" />
+                <rect
+                  x="18"
+                  y="6"
+                  width="6"
                   height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect x="6" width="6" height="18" rx="1" fill="#1E1E1E" />
-                  <rect
-                    x="18"
-                    y="6"
-                    width="6"
-                    height="18"
-                    rx="1"
-                    transform="rotate(90 18 6)"
-                    fill="#1E1E1E"
-                  />
-                </svg>
+                  rx="1"
+                  transform="rotate(90 18 6)"
+                  fill="#1E1E1E"
+                />
+              </svg>
+            </button>
+            <h2>Application Form</h2>
+            <form onSubmit={submitHandler}>
+              <label>
+                Company:{" "}
+                <input
+                  type="text"
+                  id="company"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+              <label>
+                Title:{" "}
+                <input
+                  type="text"
+                  id="title"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+
+              {/* adding array field */}
+              <AddBox
+                arr={arr}
+                setArr={(obj) => setArr(obj)}
+                propertyKey={"description"}
+              />
+              <AddBox
+                arr={arr}
+                setArr={(obj) => setArr(obj)}
+                propertyKey={"responsibilities"}
+              />
+              <AddBox
+                arr={arr}
+                setArr={(obj) => setArr(obj)}
+                propertyKey={"requirements"}
+              />
+              <AddBox
+                arr={arr}
+                setArr={(obj) => setArr(obj)}
+                propertyKey={"desired"}
+              />
+              <AddBox
+                arr={arr}
+                setArr={(obj) => setArr(obj)}
+                propertyKey={"benefit"}
+              />
+
+              <label>
+                Salaries:{" "}
+                <input
+                  type="text"
+                  id="salaries"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+              <label>
+                Date:{" "}
+                <input
+                  type="text"
+                  id="date"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+              <label>
+                Link:{" "}
+                <input
+                  type="text"
+                  id="link"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+              <button className="modal__submit" type="submit">
+                SUBMIT
               </button>
-              <h2>Application Form</h2>
-              <form onSubmit={submitHandler}>
-                <label>
-                  Company: <input type="text" id="company" autoComplete="off" />
-                </label>
-                <label>
-                  Title: <input type="text" id="title" autoComplete="off" />
-                </label>
-                <div>
-                  <label htmlFor="description">Description:</label>
-                  <div className="modal__group">
-                    <input
-                      type="text"
-                      id="description"
-                      autoComplete="off"
-                      ref={descriptionRef}
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addHandler("description", descriptionRef.current.value)
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  {arr.description.length !== 0 && (
-                    <div className="modal__list-preview">
-                      {arr.description.map((item, idx) => (
-                        <div className="modal__list-preview__item" key={idx}>
-                          <p>{item}</p>
-                          <button
-                            type="button"
-                            onClick={() => removeHandler("description", idx)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="responsibilities">Responsibilities:</label>
-                  <div className="modal__group">
-                    <input
-                      type="text"
-                      id="responsibilities"
-                      autoComplete="off"
-                      ref={responsibilitiesRef}
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addHandler(
-                          "responsibilities",
-                          responsibilitiesRef.current.value
-                        )
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  {arr.responsibilities.length !== 0 && (
-                    <div className="modal__list-preview">
-                      {arr.responsibilities.map((item, idx) => (
-                        <div className="modal__list-preview__item" key={idx}>
-                          <p>{item}</p>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              removeHandler("responsibilities", idx)
-                            }
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="requirements">requirements:</label>
-                  <div className="modal__group">
-                    <input
-                      type="text"
-                      id="requirements"
-                      autoComplete="off"
-                      ref={requirementsRef}
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addHandler(
-                          "requirements",
-                          requirementsRef.current.value
-                        )
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  {arr.requirements.length !== 0 && (
-                    <div className="modal__list-preview">
-                      {arr.requirements.map((item, idx) => (
-                        <div className="modal__list-preview__item" key={idx}>
-                          <p>{item}</p>
-                          <button
-                            type="button"
-                            onClick={() => removeHandler("requirements", idx)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="desired">Desired:</label>
-                  <div className="modal__group">
-                    <input
-                      type="text"
-                      id="desired"
-                      ref={desiredRef}
-                      autoComplete="off"
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addHandler("desired", desiredRef.current.value)
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  {arr.desired.length !== 0 && (
-                    <div className="modal__list-preview">
-                      {arr.desired.map((item, idx) => (
-                        <div className="modal__list-preview__item" key={idx}>
-                          <p>{item}</p>
-                          <button
-                            type="button"
-                            onClick={() => removeHandler("desired", idx)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="benefit">Benefit:</label>
-                  <div className="modal__group">
-                    <input
-                      type="text"
-                      id="benefit"
-                      ref={benefitRef}
-                      autoComplete="off"
-                    />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addHandler("benefit", benefitRef.current.value)
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  {arr.benefit.length !== 0 && (
-                    <div className="modal__list-preview">
-                      {arr.benefit.map((item, idx) => (
-                        <div className="modal__list-preview__item" key={idx}>
-                          <p>{item}</p>
-                          <button
-                            type="button"
-                            onClick={() => removeHandler("benefit", idx)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <label>
-                  Salaries:{" "}
-                  <input type="text" id="salaries" autoComplete="off" />
-                </label>
-                <label>
-                  Date: <input type="text" id="date" autoComplete="off" />
-                </label>
-                <label>
-                  Link: <input type="text" id="link" autoComplete="off" />
-                </label>
-                <button className="modal__submit" type="submit">
-                  SUBMIT
-                </button>
-              </form>
-            </div>
-          </section>
-          <div className="bg-cover" onClick={() => setOpened(false)}></div>
-        </>
-      );
-  }
+            </form>
+          </div>
+        </section>
+        <div className="bg-cover" onClick={() => setOpened(false)}></div>
+      </>
+    );
+}
+
+const Add = ({ renderForm }) => {
+  const [hasOpened, setOpened] = useState(false);
+
   return (
     <div className="add">
       <button
@@ -327,7 +250,11 @@ const Add = ({ renderForm }) => {
           />
         </svg>
       </button>
-      <AddModal />
+      <AddModal
+        setOpened={(bool) => setOpened(bool)}
+        hasOpened={hasOpened}
+        renderForm={renderForm}
+      />
     </div>
   );
 };
