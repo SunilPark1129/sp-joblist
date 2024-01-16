@@ -14,6 +14,7 @@ const strInitVal = {
   title: "",
   salaries: "",
   link: "",
+  location: "",
 };
 
 function AddBox({ arr, setArr, propertyKey }) {
@@ -79,6 +80,7 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
       benefit: arr.benefit,
       salaries: str.salaries,
       link: str.link,
+      location: str.location,
       status: "pending",
     };
 
@@ -149,6 +151,15 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
                 <input
                   type="text"
                   id="title"
+                  onChange={stringChangeHandler}
+                  autoComplete="off"
+                />
+              </label>
+              <label>
+                Location:{" "}
+                <input
+                  type="text"
+                  id="location"
                   onChange={stringChangeHandler}
                   autoComplete="off"
                 />

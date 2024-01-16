@@ -44,6 +44,7 @@ const ListItems = ({ data, getStatus, removeForm }) => {
     benefit,
     link,
     status,
+    location,
   } = data;
 
   function RemoveModal() {
@@ -132,6 +133,11 @@ const ListItems = ({ data, getStatus, removeForm }) => {
         {title.trim().length !== 0 && (
           <p>
             <span>Title:</span> {title}
+          </p>
+        )}
+        {location && (
+          <p>
+            <span>Location:</span> {location}
           </p>
         )}
         {description.length !== 0 && (
