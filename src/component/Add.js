@@ -234,7 +234,7 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
             </form>
           </div>
         </section>
-        <div className="bg-cover" onClick={() => setOpened(false)}></div>
+        <div className="bg-cover"></div>
       </>
     );
 }
