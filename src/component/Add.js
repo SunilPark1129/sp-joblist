@@ -83,6 +83,12 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
   const [arr, setArr] = useState(arrInitVal);
   const [str, setStr] = useState(strInitVal);
 
+  function submitKeyDownHandler(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  }
+
   function submitHandler(e) {
     e.preventDefault();
     if (str.company.length === 0) return;
@@ -154,7 +160,7 @@ function AddModal({ setOpened, hasOpened, renderForm }) {
               </svg>
             </button>
             <h2>Application Form</h2>
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} onKeyDown={submitKeyDownHandler}>
               <label>
                 Company:{" "}
                 <input
