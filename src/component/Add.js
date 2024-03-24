@@ -21,10 +21,22 @@ function AddBox({ arr, setArr, propertyKey }) {
   const ref = useRef(null);
 
   // push string into array
-  function addHandler(val) {
-    if (val.trim().length === 0) return;
-    setArr((prev) => ({ ...prev, [propertyKey]: [...prev[propertyKey], val] }));
+  function addHandler() {
+    const { value } = ref.current;
+    if (value.trim().length === 0) return;
+    setArr((prev) => ({
+      ...prev,
+      [propertyKey]: [...prev[propertyKey], value],
+    }));
     ref.current.value = "";
+    ref.current.focus();
+  }
+
+  function keyDownHandler(e) {
+    const { key } = e;
+    if (key === "Enter") {
+      addHandler();
+    }
   }
 
   function removeHandler(idx) {
@@ -40,8 +52,14 @@ function AddBox({ arr, setArr, propertyKey }) {
         {propertyKey.charAt(0).toUpperCase() + propertyKey.slice(1)}:
       </label>
       <div className="modal__group">
-        <input type="text" id={propertyKey} autoComplete="off" ref={ref} />
-        <button type="button" onClick={() => addHandler(ref.current.value)}>
+        <input
+          type="text"
+          id={propertyKey}
+          autoComplete="off"
+          ref={ref}
+          onKeyDown={keyDownHandler}
+        />
+        <button type="button" onClick={addHandler}>
           +
         </button>
       </div>
