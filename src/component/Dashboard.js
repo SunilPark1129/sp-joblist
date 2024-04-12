@@ -35,13 +35,13 @@ const Dashboard = ({ updatedForm, filterData }) => {
       const reg = new RegExp(`${filterData.search}`, "igm");
 
       try {
-        const temp = data.result.filter(({ status, company }) => {
+        const temp = data.result.filter(({ status, company, location }) => {
           if (
             ((filterData.pending && status === "pending") ||
               (filterData.passed && status === "passed") ||
               (filterData.rejected && status === "rejected") ||
               (filterData.started && status === "started")) &&
-            company.match(reg)
+            (company.match(reg) || location.match(reg))
           ) {
             return true;
           }
