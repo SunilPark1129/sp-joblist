@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./styles/companyName.css";
 import { calculateDate } from "../utilities/calculateDate";
 const CompanyName = ({ data, getCompany, selectedCompany }) => {
+  const listRef = useRef();
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo(0, -listRef.current.scrollHeight);
+    }
+  }, [data]);
   if (!data || !selectedCompany)
     return (
       <aside className="company-lists">
@@ -23,7 +29,7 @@ const CompanyName = ({ data, getCompany, selectedCompany }) => {
 
   return (
     <aside className="company-lists">
-      <div className="company-lists__box">
+      <div className="company-lists__box" ref={listRef}>
         {data.map((item) => {
           const dateStr = calculateDate(item.id);
           return (
